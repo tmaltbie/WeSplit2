@@ -26,12 +26,24 @@ struct ContentView: View {
         return amountPerPerson
     }
     
+    var grandTotal: Double {
+        let grandTotal = totalPerPerson * (Double(numberOfPeople + 2))
+        return grandTotal
+    }
+    
+    var numOfPeopleToString: String {
+        let string = String(numberOfPeople)
+        return string
+    }
+    
     var body: some View {
         NavigationView {
             Form {
                 Section {
                     TextField("Amount", text: $checkAmount)
                         .keyboardType(.decimalPad)
+                    
+//                    TextField("Number of people", text: $peopleString)
                     
                     Picker("Number of people", selection: $numberOfPeople) {
                         ForEach(2 ..< 100) {
@@ -47,6 +59,10 @@ struct ContentView: View {
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
+                }
+                
+                Section(header: Text("Subtotal of cheque")) {
+                    Text("$\(grandTotal, specifier: "%.2f")")
                 }
                 
                 Section (header: Text("Amount per person")){
